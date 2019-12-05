@@ -1,9 +1,19 @@
 <?php
+// On démarre la session (ceci est indispensable dans toutes les pages de notre section membre)
+session_start ();  
+ 
+// On récupère nos variables de session
+
+//définir la session une session est un tableau temporaire 
+//1 er point c quoi une session
+// 
+?>
+<?php
 
 include '../core/commandeC.php';
 
 $crim = new commandeC();
-$listcrim = $crim->affichercommande();
+
 ?>
 <!DOCTYPE html>
 	<html lang="zxx" class="no-js">
@@ -53,7 +63,21 @@ $listcrim = $crim->affichercommande();
 				  			<div class="col-lg-6 col-sm-6 col-8 header-top-right no-padding">
 								<a class="btns" href="tel:+953 012 3654 896">+953 012 3654 896</a>
 				  				<a class="btns" href="mailto:support@colorlib.com">support@colorlib.com</a>	
-				  				<a class="btns" href="panier.html"><span class="Panier">Panier</span></a>		
+				  				<?php 
+				  				if (isset($_SESSION['l']) && isset($_SESSION['p'])) 
+{ 
+$listcrim = $crim->affichercommande($_SESSION['r']);
+	 echo '<img src="compte3.png"> <b class="panier">'.$_SESSION['l'].'</b> '; 
+	echo '<a href="./logout.php">Cliquer pour se déconnecter</a>';
+
+}
+
+else { 
+      echo 'Veuillez vous connecter </br>';  
+	  echo '<a href="./index.html">Cliquer pour se connecter</a>';
+
+}  ?>
+				  				<form action="afficherpanier.php"><input type="submit" name="abbb" value="Panier"></form>			
 				  				<a class="icons" href="tel:+953 012 3654 896">
 				  					<span class="lnr lnr-phone-handset"></span>
 				  				</a>
@@ -101,9 +125,9 @@ $listcrim = $crim->affichercommande();
 					<div class="row d-flex align-items-center justify-content-center">
 						<div class="about-content col-lg-12">
 							<h1 class="text-white">
-								Panier			
+								Commande			
 							</h1>	
-							<p class="text-white link-nav"><a href="index.html">Accueil </a>  <span class="lnr lnr-arrow-right"></span>  <a href="contact.html"> Panier</a></p>
+							<p class="text-white link-nav"><a href="index.html">Accueil </a>  <span class="lnr lnr-arrow-right"></span>  <a href="contact.html"> Commande</a></p>
 						</div>	
 					</div>
 				</div>
@@ -113,15 +137,15 @@ $listcrim = $crim->affichercommande();
 			<!-- Start contact-page Area -->
 			<section class="contact-page-area section-gap">
 				<div class="container">
-					<table border="2">
+				<center>	<table border="2">
     <tr>
       
-        <td>refcommande</td>
-        <td>prix</td>
-        <td>description</td>
-         <td>description</td>
-        <td>quantite</td>
-        <td>annulation</td>
+        <td>REFCOMMANDE</td>
+        <td>PRIX</td>
+        <td>ETAT</td>
+         <td>DESCRIPTION</td>
+        <td>DATE</td>
+        <td>ETAT</td>
         
 
 
@@ -158,7 +182,7 @@ foreach ($listcrim as $row)
 }
   
 ?>
-</table>
+</table></center>
 				</div>	
 			</section>
 			<!-- End contact-page Area -->
