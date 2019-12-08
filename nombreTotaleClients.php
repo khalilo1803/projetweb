@@ -1,10 +1,7 @@
 <?php
 include '../core/clientC.php';
 $cli = new clientC();
-$listcli = $cli->afficherClient();
-
-
-
+$listcli = $cli->calculerNbTotClients();
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
@@ -17,7 +14,7 @@ $listcli = $cli->afficherClient();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Les Comptes clients</title>
+    <title>Nombres Totales Des Clients</title>
     <meta name="description" content="Sufee Admin - HTML5 Admin Template">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -258,122 +255,30 @@ $listcli = $cli->afficherClient();
 
 
 
-           <!-- AFFICHAGE DE TOUS LES COMPTES CLIENTS :) -->
-            <div style="text-align: center;">
-               <!-- nombres des clients et moyenne d'age-->
-               <form method="POST" action="nombreTotaleClients.php" >
-               <input type="hidden" name="nbclient" id="nbclient" value="nombre">
-                <input type="submit" name="nbclient" style=" background-color: #bdc3c7" value="Le nombre totales de clients">
-               </form>
-                   </br>
-               <form method="POST" action="moyenneAge.php" >
-               <input type="hidden" name="moyenneage" id="moyenneage" value="age">
-                <input type="submit" name="moyenneage" style=" background-color: #bdc3c7" value="La moyenne d'age des clients">
-               </form>
-           </div>
-           </br>
+           <!-- AFFICHAGE DE nombres des clients totales :) -->
 
-
-
-           <div>
-               <form method="POST" action="lesCompteCherch.php">
-                    <p style="margin-left: 20px">chercher:</p>
-                   <input type="text" name="search" id="search" placeholder="Search by  Name" style="margin-left: 5px ">
-                   <input type="submit" name="bbb" value="search" style="background-color: #bdc3c7 ; margin-left: 5px ">
-               </form>
-           </div>
-
-
-
-          <!-- <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon" style="margin-left: 5px ;background-color: #bdc3c7">Search</span>
-                    <input type="text" name="search_text" id="search_text" placeholder="Search by  Details" class="form-control" style="margin-right: 500px ; margin-left: 20px" />
-                </div>
-            <br />
-            <div id="result"></div>                 
-                          </div>  -->
-
-           <div>
-               <!-- TRI-->
-               <form method="POST" action="lesComptesTrier.php">
-                <p style="margin-left: 20px">Trier Par :</p>
-               <input type="hidden" name="tri" id="tri" value="age">
-                <input type="submit" name="tri" style="margin-left: 5px ; background-color: #bdc3c7" value="Age des Clients">
-               </form>
-           </div>
-
-
+           
 
       <div id="afficher" >
 
-      
-        <table border="5" style="margin-right: 5px ;margin-left: 15px ;margin-top: 10px; background-color: #dfe6e9">
-    <tr>
-        <td>Identifient</td>
-        <td>Nom</td>
-        <td>Prenom</td>
-        <td>Age</td>
-        <td>Login</td>
-        <td>Mot de passe</td>
-        <td>Email</td>
-        <td>Numéro de télephone</td>
-        <td>Adresse</td>
-         <td>Modifier</td>
-          <td>Supprimer</td>
+            <?php
+               $nbclients=0;
+               $moyenneAge=0;
+               foreach ($listcli as $row)
+                   {   
 
-    </tr>
-<?php
+                        $nbclients++;
+                    
+                         $moyenneAge+=$row["ageclient"];                    
+                    }
 
-foreach ($listcli as $row)
-{
-    echo '
-        <tr>
-            <td>'.$row["idclient"].'</td>
-            <td>'.$row["nomclient"].'</td>
-            <td>'.$row["prenomclient"].'</td>
-            <td>'.$row["ageclient"].'</td>
-            <td>'.$row["login"].'</td>
-            <td>'.$row["mdp"].'</td>
-            <td>'.$row["email"].'</td>
-            <td>'.$row["numclient"].'</td>
-            <td>'.$row["adresseclient"].'</td>
-            <td>
-                <form action="modifierClient.php" method="get">
-                    <input type="hidden" id="id" name="id" value="'.$row["idclient"].'">
-                    <input type="hidden" id="nom" name="nom" value="'.$row["nomclient"].'">
-                    <input type="hidden" id="prenom" name="prenom" value="'.$row["prenomclient"].'">
-                    <input type="hidden" id="age" name="age" value="'.$row["ageclient"].'">
-                    <input type="hidden" id="login" name="login" value="'.$row["login"].'">
-                    <input type="hidden" id="mdp" name="mdp" value="'.$row["mdp"].'">
-                    <input type="hidden" id="email" name="email" value="'.$row["email"].'">
-                    <input type="hidden" id="num" name="num" value="'.$row["numclient"].'">
-                    <input type="hidden" id="adresse" name="adresse" value="'.$row["adresseclient"].'">
-                    <input type="submit" name="modifier" value="modifier" style="background-color: #636e72;">
-                </form>
+              ?>
+           </br>
 
-            </td>
+           <h1 style="text-align: center;color: #2c3e50">Le Nombre Totales Des Clients est :</h1>
+          <h1 style="text-align: center;color: #c0392b ;font-size: 100px"><?php echo $nbclients ;?></h1>
+         </div>
 
-
-
-            <td><form method="POST" action="suppClient.php">
-            <input type="hidden" id="id" name="id" value="'.$row["idclient"].'">
-    <input type="submit" name="supprimer" value="supprimer" style="background-color: #d63031">
-     
-    </form>
-    </td>
-
-        </tr>
-    ';
-}
-?>
-</table>
-     
-</div>
-</br>
-</br>
-
-           
 
 
     <!-- Right Panel -->
