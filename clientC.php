@@ -93,9 +93,8 @@ class clientC
 
      function afficherClient()
     {
-        $limit=5;
 
-        $sql="select * from patisserie.clients limit $limit";
+        $sql="select * from patisserie.clients ";
 
         $db = config::getConnexion();
         try
@@ -108,6 +107,28 @@ class clientC
             die('Erreur: '.$e->getMessage());
         }
     }
+
+
+    function afficherParPagination($start,$page,$limit)
+    {
+        
+
+        $sql="select * from patisserie.clients limit $start, $limit";
+
+        $db = config::getConnexion();
+        try
+        {
+            $list=$db->query($sql);
+            return $list;
+        }
+        catch (Exception $e)
+        {
+            die('Erreur: '.$e->getMessage());
+        }
+    }
+
+
+
 
     function modifierClient($id,$nom,$prenom,$age,$login,$mdp,$email,$num,$adresse)
     {
