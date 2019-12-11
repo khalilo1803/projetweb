@@ -36,7 +36,7 @@ if (!empty($_POST['log']) && !empty($_POST['mdp'])){
 		$_SESSION['l']=$_POST['log'];
 		$_SESSION['p']=$_POST['mdp'];
 		$_SESSION['r']=$t['idclient'];
-		header("location:afficherpanier.php");
+		header("location:index.php");
 		
 		}
 	
