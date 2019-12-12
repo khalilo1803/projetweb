@@ -75,7 +75,7 @@ class clientC
      function afficherClient2($search)
     {
 
-        $sql="select * from patisserie.clients where nomclient='$search'";
+        $sql="select * from patisserie.clients where nomclient='$search' || prenomclient='$search'";
 
         $db = config::getConnexion();
         try
@@ -102,6 +102,31 @@ class clientC
             $list=$db->query($sql);
             return $list;
         }
+        catch (Exception $e)
+        {
+            die('Erreur: '.$e->getMessage());
+        }
+    }
+
+
+     function forgotPass($email)
+    {
+
+        $sql="select * from dbpatisserie.clients where email='$email' ";
+        $str="1234567890azertyuiopqsdfghjklmwxcvbn";
+        $str=str_shuffle($str);
+        $str=substr($str, 0,5);
+        $sql2="update dbpatisserie.clients set mdp='$str'  where email='$email'";
+       
+
+        $db = config::getConnexion();
+        try
+        {
+            $db->query($sql2);
+            $list=$db->query($sql);
+            return $list;
+        }
+        
         catch (Exception $e)
         {
             die('Erreur: '.$e->getMessage());
